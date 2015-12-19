@@ -1,0 +1,29 @@
+<aura:component >
+    <aura:attribute name="account" type="Account" />
+    <aura:attribute name="result" type="LightningAccountEditResult" />
+	<!-- succes message -->
+    <aura:if isTrue="{! !empty(v.result.accountId)}">
+        <div class="slds-box slds-theme--success slds-m-bottom--xx-small">
+            <p>
+                <ui:outputText value="[Success] Save Account Name = " />
+                <a href="{! '/' + v.account.Id}">
+                    <ui:outputText value="{!v.account.Name}" />
+                </a>
+            </p>
+        </div>
+    </aura:if>
+    <!-- error message -->
+    <aura:if isTrue="{! !empty(v.result.errorMessages)}">
+        <div class="slds-box slds-theme--error slds-m-bottom--xx-small">
+            <p>
+                <ul class="slds-list--dotted">
+                    <aura:iteration items="{!v.result.errorMessages}" var="err">
+                        <li>
+                            <ui:outputText value="{!err}" />
+                        </li>
+                    </aura:iteration>
+                </ul>
+            </p>
+        </div>
+    </aura:if>
+</aura:component>

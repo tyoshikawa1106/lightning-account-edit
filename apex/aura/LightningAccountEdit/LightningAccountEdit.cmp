@@ -1,0 +1,105 @@
+<aura:component controller="LightningAccountEditController" implements="flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId">
+    <!-- handler -->
+    <aura:handler name="init" action="{!c.init}" value="{!this}" />
+    <!-- attribute -->
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="account" type="Account" />
+    <aura:attribute name="contacts" type="LightningAccountEditApexContact[]" />
+    <aura:attribute name="deleteContactIdsJSON" type="String" />
+    <aura:attribute name="result" type="LightningAccountEditResult" />
+    <!-- require -->
+    <ltng:require styles="/resource/SLDS0121/assets/styles/salesforce-lightning-design-system.css" />
+    
+    <!-- component -->
+    <div aura:id="lightning" class="slds">
+        <!-- MessageBox -->
+        <c:LightningAccountEditMessageBox account="{!v.account}" result="{!v.result}" />
+        <!-- Main -->
+        <div class="slds-box">
+            <!-- Account Info -->
+            <h1>Account Info</h1>
+            <div class="slds-form-element slds-m-bottom--small slds-is-required">
+                <label class="slds-form-element__label">Name</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                    <ui:inputText value="{!v.account.Name}" class="slds-input" aura:id="accountName" />
+                </div>
+            </div>
+            <div class="slds-form-element slds-m-bottom--small">
+                <label class="slds-form-element__label">Account Numer</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                    <ui:inputText value="{!v.account.AccountNumber}" class="slds-input" aura:id="accountNumber" />
+                </div>
+            </div>
+            <!-- Save Button -->
+            <button class="slds-button slds-button--brand slds-m-bottom--small" onclick="{!c.doSaveBtn}">Save</button>
+            <!-- Contact Info -->
+            <h1>Contact Info</h1>
+            <div class="slds-scrollable--x">
+                <table class="slds-table slds-table--bordered">
+                    <colgroup>
+                        <col style="width: 100px;"></col>
+                        <col></col>
+                        <col></col>
+                        <col></col>
+                        <col></col>
+                        <col></col>
+                    </colgroup>
+                    <thead>
+                        <tr class="slds-text-heading--label">
+                            <th class="slds-text-align--center" scope="col">
+                                <a>
+                                    <ui:outputText value="＋" />
+                                </a>
+                            </th>
+                            <th scope="col">
+                                <ui:outputText value="No " />
+                            </th>
+                            <th scope="col">
+                                <ui:outputText value="LastName" />
+                            </th>
+                            <th scope="col">
+                                <ui:outputText value="FirstName" />
+                            </th>
+                            <th scope="col">
+                                <ui:outputText value="LeadSource" />
+                            </th>
+                            <th scope="col">
+                                <ui:outputText value="Description" />
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.contacts}" var="item" indexVar="index" >
+                            <tr class="slds-hint-parent">
+                                <td class="slds-text-body--small">
+                                    <a>
+                                        <ui:outputText value="Copy" />
+                                    </a>
+                                    <ui:outputText value=" | " />
+                                    <a>
+                                        <ui:outputText value="Delete" />
+                                    </a>
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!index + 1}" />
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!item.contact.LastName}" />
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!item.contact.FirstName}" />
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!item.contact.LeadSource}" />
+                                </td>
+                                <td>
+                                    <ui:outputText value="{!item.contact.Description}" />
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</aura:component>
